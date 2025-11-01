@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Bella - Your Beauty Consultant</title>
+    <link rel="stylesheet" href="/static/style.css?v=2.0">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-spa"></i>
+                <h1>Bella Beauty</h1>
+            </div>
+            <nav class="nav">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2 class="hero-title">Your Personal Beauty Consultant</h2>
+            <p class="hero-subtitle">Expert skincare, makeup, and haircare advice at your fingertips</p>
+            <button class="cta-button" onclick="scrollToChat()">
+                <i class="fas fa-comments"></i> Start Consultation
+            </button>
+        </div>
+        <div class="hero-image">
+            <div class="beauty-icon">
+                <i class="fas fa-heart"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">What I Can Help You With</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-droplet"></i>
+                    </div>
+                    <h3>Skincare Routines</h3>
+                    <p>Personalized skincare recommendations for your unique skin type and concerns</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>Makeup Tips</h3>
+                    <p>Expert makeup advice, tutorials, and product recommendations</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-spray-can"></i>
+                    </div>
+                    <h3>Haircare Solutions</h3>
+                    <p>Hair health tips, styling advice, and product suggestions</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h3>Product Analysis</h3>
+                    <p>Ingredient breakdowns and product safety information</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Daily Tip -->
+    <section class="daily-tip">
+        <div class="container">
+            <div class="tip-card">
+                <div class="tip-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <div class="tip-content">
+                    <h3>Beauty Tip of the Day</h3>
+                    <p id="daily-tip">Loading tip...</p>
+                </div>
+                <button class="tip-refresh" onclick="loadNewTip()">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chat Section -->
+    <section class="chat-section" id="chat">
+        <div class="container">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <div class="chat-header-info">
+                        <div class="avatar">
+                            <i class="fas fa-user-nurse"></i>
+                        </div>
+                        <div>
+                            <h3>Bella</h3>
+                            <p class="status">
+                                <span class="status-dot"></span> Online
+                            </p>
+                        </div>
+                    </div>
+                    <div class="chat-actions">
+                        <button class="icon-button" onclick="clearChat()" title="Clear Chat">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message bot-message">
+                        <div class="message-avatar">
+                            <i class="fas fa-spa"></i>
+                        </div>
+                        <div class="message-content">
+                            <p>Hello! I'm Bella, your personal beauty consultant. 💄✨</p>
+                            <p>I'm here to help you with skincare routines, makeup tips, haircare advice, and product recommendations. What beauty concerns can I help you with today?</p>
+                            <span class="message-time">Just now</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-questions">
+                    <button class="quick-btn" onclick="sendQuickMessage('What skincare routine should I follow for oily skin?')">
+                        Skincare Routine
+                    </button>
+                    <button class="quick-btn" onclick="sendQuickMessage('Recommend makeup products for beginners')">
+                        Makeup Tips
+                    </button>
+                    <button class="quick-btn" onclick="sendQuickMessage('How can I treat acne naturally?')">
+                        Acne Treatment
+                    </button>
+                    <button class="quick-btn" onclick="sendQuickMessage('Best products for dry and sensitive skin')">
+                        Dry Skin Help
+                    </button>
+                </div>
+
+                <div class="chat-input-container">
+                    <div class="chat-input-wrapper">
+                        <textarea 
+                            id="userInput" 
+                            placeholder="Ask me anything about beauty and skincare..."
+                            rows="1"
+                            onkeypress="handleKeyPress(event)"
+                        ></textarea>
+                        <button class="send-button" onclick="sendMessage()" id="sendButton">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div id="errorMessage" style="color: red; margin-top: 10px; display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4><i class="fas fa-spa"></i> Bella Beauty</h4>
+                    <p>Your trusted beauty consultant for personalized skincare, makeup, and haircare advice.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Disclaimer</h4>
+                    <p>This is an AI-powered beauty consultant. For serious skin conditions, please consult a dermatologist.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Bella Beauty Consultant. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Generate unique session ID
+        const sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        console.log('Session ID:', sessionId);
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Page loaded, initializing...');
+            loadNewTip();
+            autoResizeTextarea();
+            testConnection();
+        });
+
+        // Test server connection
+        async function testConnection() {
+            try {
+                const response = await fetch('/health');
+                const data = await response.json();
+                console.log('Server health check:', data);
+                
+                if (!data.api_configured) {
+                    showError('⚠️ API key not configured. Please add your Gemini API key to the .env file.');
+                }
+            } catch (error) {
+                console.error('Connection test failed:', error);
+                showError('❌ Cannot connect to server. Please make sure the Flask app is running.');
+            }
+        }
+
+        // Show error message
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            if (errorDiv) {
+                errorDiv.textContent = message;
+                errorDiv.style.display = 'block';
+                setTimeout(() => {
+                    errorDiv.style.display = 'none';
+                }, 10000);
+            }
+            console.error(message);
+        }
+
+        // Smooth scroll to chat section
+        function scrollToChat() {
+            document.getElementById('chat').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Auto-resize textarea
+        function autoResizeTextarea() {
+            const textarea = document.getElementById('userInput');
+            textarea.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+            });
+        }
+
+        // Handle Enter key press
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+
+        // Send message function
+        async function sendMessage() {
+            const userInput = document.getElementById('userInput');
+            const message = userInput.value.trim();
+            
+            if (!message) {
+                console.log('Empty message, not sending');
+                return;
+            }
+            
+            console.log('Sending message:', message);
+            
+            // Disable input while processing
+            userInput.disabled = true;
+            document.getElementById('sendButton').disabled = true;
+            
+            // Add user message to chat
+            addMessage(message, 'user');
+            
+            // Clear input
+            userInput.value = '';
+            userInput.style.height = 'auto';
+            
+            // Show typing indicator
+            showTypingIndicator();
+            
+            try {
+                console.log('Making fetch request to /chat...');
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        session_id: sessionId
+                    })
+                });
+                
+                console.log('Response status:', response.status);
+                const data = await response.json();
+                console.log('Response data:', data);
+                
+                // Remove typing indicator
+                removeTypingIndicator();
+                
+                if (response.ok && data.response) {
+                    // Add bot response to chat
+                    addMessage(data.response, 'bot');
+                } else {
+                    const errorMsg = data.error || 'Sorry, I encountered an error. Please try again.';
+                    addMessage(errorMsg, 'bot');
+                    showError(errorMsg);
+                    console.error('Error response:', data);
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+                removeTypingIndicator();
+                const errorMsg = 'Sorry, I\'m having trouble connecting. Please check that the Flask server is running and try again.';
+                addMessage(errorMsg, 'bot');
+                showError(errorMsg);
+            } finally {
+                // Re-enable input
+                userInput.disabled = false;
+                document.getElementById('sendButton').disabled = false;
+                userInput.focus();
+            }
+        }
+
+        // Send quick message
+        function sendQuickMessage(message) {
+            console.log('Quick message selected:', message);
+            const userInput = document.getElementById('userInput');
+            userInput.value = message;
+            sendMessage();
+        }
+
+        // Add message to chat
+        function addMessage(text, sender) {
+            console.log('Adding message:', sender, text.substring(0, 50) + '...');
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.innerHTML = sender === 'bot' ? '<i class="fas fa-spa"></i>' : '<i class="fas fa-user"></i>';
+            
+            const content = document.createElement('div');
+            content.className = 'message-content';
+            
+            // Convert line breaks to paragraphs
+            const paragraphs = text.split('\n\n').filter(p => p.trim());
+            if (paragraphs.length === 0) {
+                const p = document.createElement('p');
+                p.textContent = text;
+                content.appendChild(p);
+            } else {
+                paragraphs.forEach(para => {
+                    const p = document.createElement('p');
+                    p.textContent = para.trim();
+                    content.appendChild(p);
+                });
+            }
+            
+            const time = document.createElement('span');
+            time.className = 'message-time';
+            time.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            content.appendChild(time);
+            
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(content);
+            chatMessages.appendChild(messageDiv);
+            
+            // Scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Show typing indicator
+        function showTypingIndicator() {
+            console.log('Showing typing indicator');
+            const chatMessages = document.getElementById('chatMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message bot-message typing-indicator-message';
+            typingDiv.id = 'typingIndicator';
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.innerHTML = '<i class="fas fa-spa"></i>';
+            
+            const content = document.createElement('div');
+            content.className = 'message-content';
+            
+            const typing = document.createElement('div');
+            typing.className = 'typing-indicator';
+            typing.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+            
+            content.appendChild(typing);
+            typingDiv.appendChild(avatar);
+            typingDiv.appendChild(content);
+            chatMessages.appendChild(typingDiv);
+            
+            // Scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Remove typing indicator
+        function removeTypingIndicator() {
+            console.log('Removing typing indicator');
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        // Clear chat
+        async function clearChat() {
+            if (!confirm('Are you sure you want to clear the chat history?')) {
+                return;
+            }
+            
+            console.log('Clearing chat...');
+            
+            try {
+                const response = await fetch('/clear', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        session_id: sessionId
+                    })
+                });
+                
+                if (response.ok) {
+                    const chatMessages = document.getElementById('chatMessages');
+                    chatMessages.innerHTML = `
+                        <div class="message bot-message">
+                            <div class="message-avatar">
+                                <i class="fas fa-spa"></i>
+                            </div>
+                            <div class="message-content">
+                                <p>Hello! I'm Bella, your personal beauty consultant. 💄✨</p>
+                                <p>I'm here to help you with skincare routines, makeup tips, haircare advice, and product recommendations. What beauty concerns can I help you with today?</p>
+                                <span class="message-time">Just now</span>
+                            </div>
+                        </div>
+                    `;
+                    console.log('Chat cleared successfully');
+                }
+            } catch (error) {
+                console.error('Error clearing chat:', error);
+                alert('Failed to clear chat. Please try again.');
+            }
+        }
+
+        // Load new beauty tip
+        async function loadNewTip() {
+            console.log('Loading new tip...');
+            const tipElement = document.getElementById('daily-tip');
+            const refreshButton = document.querySelector('.tip-refresh');
+            
+            // Add loading state
+            tipElement.textContent = 'Loading...';
+            if (refreshButton) refreshButton.disabled = true;
+            
+            try {
+                const response = await fetch('/get-tips');
+                const data = await response.json();
+                
+                if (response.ok && data.tip) {
+                    tipElement.textContent = data.tip;
+                    console.log('Tip loaded:', data.tip);
+                } else {
+                    tipElement.textContent = 'Unable to load tip. Please try again.';
+                }
+            } catch (error) {
+                console.error('Error loading tip:', error);
+                tipElement.textContent = 'Unable to load tip. Please try again.';
+            } finally {
+                if (refreshButton) refreshButton.disabled = false;
+            }
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                
+                // Update active link
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Smooth scroll
+                if (targetId !== '#contact' && targetId !== '#about' && targetId !== '#services') {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+
+        console.log('✅ Beauty Consultant initialized successfully!');
+    </script>
+</body>
+</html>
