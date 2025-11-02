@@ -15,7 +15,7 @@ genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel('gemini-pro')
 
 # Beauty consultant system prompt
-BEAUTY_CONSULTANT_PROMPT = """You are Bella, an expert beauty consultant with over 15 years of experience in skincare, makeup, haircare, and wellness. 
+BEAUTY_CONSULTANT_PROMPT = """You are Kyra, an expert beauty consultant with over 15 years of experience in skincare, makeup, haircare, and wellness. 
 
 Your expertise includes:
 - Skincare routines for different skin types (oily, dry, combination, sensitive)
@@ -68,7 +68,7 @@ def chat():
         for msg in history[-10:]:  # Keep last 10 messages for context
             context += f"{msg['role']}: {msg['content']}\n"
         
-        context += f"\nUser: {user_message}\nBella:"
+        context += f"\nUser: {user_message}\nKyra:"
         
         # Generate response using Gemini
         response = model.generate_content(context)
